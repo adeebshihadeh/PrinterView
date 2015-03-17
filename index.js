@@ -1,5 +1,5 @@
-var printerIP = "pb.local";
-var apiKey = "25A1AE457F3E4ACF854B80A51BA51776";
+var printerIP = "prusa.local";
+var apiKey = "156A8AE4000940CFB3C51C9DFD812D8A";
 
 function initialInfo(){
     // add apikey header to GET request
@@ -17,7 +17,8 @@ function updatePrinterStatus(){
     $.getJSON("http://"+printerIP+"/api/job", function(json){document.getElementById("printerStatus").innerHTML="State: "+json.state});
     // get name of current file being printed
     $.getJSON("http://"+printerIP+"/api/job", function(json){document.getElementById("currentPrint").innerHTML="Current Print: "+json.job.file.name});
-
+    // get print time left
+    $.getJSON("http://"+printerIP+"/api/job", function(json){document.getElementById("timeLeft").innerHTML="Time left: "+json.progress.printTimeLeft/60 + " minutes"});
 }
 
 initialInfo();
