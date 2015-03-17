@@ -27,9 +27,11 @@ function updatePrinterStatus(){
         });
 
     // get info on temps
-    $.getJSON("http://"+printerIP+"/api/printer/tool", function(json){
+    $.getJSON("http://"+printerIP+"/api/printer", function(json){
         // get temp of extruder 0 and its target temp
-        document.getElementById("e0Temp").innerHTML="Extruder: "+json.tool0.actual+"°/"+json.tool0.target+"°";
+        document.getElementById("e0Temp").innerHTML="Extruder: "+json.temperature.tool0.actual+"°/"+json.temperature.tool0.target+"°";
+        // get temp of the bed and its target temp
+        document.getElementById("bedTemp").innerHTML="Bed: "+json.temperature.bed.actual+"°/"+json.temperature.bed.target+"°";
     });
 }
 
