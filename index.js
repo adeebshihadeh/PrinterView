@@ -13,12 +13,16 @@ function initialInfo(){
 function updatePrinterStatus(){
     // add apikey header to GET request
     $.ajaxSetup({headers:{"X-Api-Key" : apiKey}});
-    // get state of the printer
-    $.getJSON("http://"+printerIP+"/api/job", function(json){document.getElementById("printerStatus").innerHTML="State: "+json.state});
-    // get name of current file being printed
-    $.getJSON("http://"+printerIP+"/api/job", function(json){document.getElementById("currentPrint").innerHTML="Current Print: "+json.job.file.name});
-    // get print time left
-    $.getJSON("http://"+printerIP+"/api/job", function(json){document.getElementById("timeLeft").innerHTML="Time left: "+json.progress.printTimeLeft/60 + " minutes"});
+
+    // get info on current print job
+    $.getJSON("http://"+printerIP+"/api/job", function(json){
+        // get printer state
+        document.getElementById("printerStatus").innerHTML="State: "+json.state;
+        //get filename of print
+        document.getElementById("currentPrint").innerHTML="Current Print: "+json.job.file.name;
+        // get estimation of print time left
+        document.getElementById("timeLeft").innerHTML="Time left: "+json.progress.printTimeLeft/60 + " minutes";
+        });
 }
 
 initialInfo();
