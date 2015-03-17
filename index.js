@@ -25,6 +25,12 @@ function updatePrinterStatus(){
         // get estimation of print time left
         document.getElementById("timeLeft").innerHTML="Time left: "+json.progress.printTimeLeft/60 + " minutes";
         });
+
+    // get info on temps
+    $.getJSON("http://"+printerIP+"/api/printer/tool", function(json){
+        // get temp of extruder 0 and its target temp
+        document.getElementById("e0Temp").innerHTML="Extruder: "+json.tool0.actual+"°/"+json.tool0.target+"°";
+    });
 }
 
 initialInfo();
