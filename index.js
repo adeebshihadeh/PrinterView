@@ -20,6 +20,8 @@ function updatePrinterStatus(){
         document.getElementById("printerStatus").innerHTML="State: "+json.state;
         //get filename of print
         document.getElementById("currentPrint").innerHTML="Current Print: "+json.job.file.name;
+        // get percentage of print completion
+        document.getElementById("printCompletion").innerHTML=json.progress.completion/1+"%";
         // get estimation of print time left
         document.getElementById("timeLeft").innerHTML="Time left: "+json.progress.printTimeLeft/60 + " minutes";
         });
