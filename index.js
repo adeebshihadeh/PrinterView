@@ -5,7 +5,7 @@ function initialInfo(){
     // add apikey header to GET request
     $.ajaxSetup({headers:{"X-Api-Key" : apiKey}});
     // get name of the printer
-    $.getJSON("http://"+printerIP+"/api/printerprofiles", function(json){document.getElementById("printerName").innerHTML="Printer: "+json.profiles._default.name});
+    $.getJSON("http://"+printerIP+"/api/printerprofiles", function(json){document.getElementById("printerName").innerHTML=json.profiles._default.name});
 
     updatePrinterStatus();
 }
@@ -19,9 +19,9 @@ function updatePrinterStatus(){
         // get printer state
         document.getElementById("printerStatus").innerHTML="State: "+json.state;
         //get filename of print
-        document.getElementById("currentPrint").innerHTML="Current Print: "+json.job.file.name;
+        document.getElementById("currentFile").innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
         // get percentage of print completion
-        document.getElementById("printCompletion").innerHTML=json.progress.completion/1+"%";
+        document.getElementById("printPercent").innerHTML=json.progress.completion.toFixed(2)*100+"%";
         // get estimation of print time left
         document.getElementById("timeLeft").innerHTML="Time left: "+json.progress.printTimeLeft/60 + " minutes";
         });
