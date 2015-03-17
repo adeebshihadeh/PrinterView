@@ -3,3 +3,7 @@ body{
   color: white;
   text-align: center;
 }
+
+#printerInfo{
+  font-size: 145%;
+}
