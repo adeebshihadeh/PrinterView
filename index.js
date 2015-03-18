@@ -36,7 +36,7 @@ function updateStatus(ip, apikey, index){
         // get estimation of print time left
         document.getElementById("timeLeft"+index).innerHTML="Time left: "+json.progress.printTimeLeft/60 + " minutes";
         // get percentage of print completion
-        document.getElementById("printPercent"+index).innerHTML=json.progress.completion.toFixed(2)*100+"%";
+        document.getElementById("printPercent"+index).innerHTML=json.progress.completion.toFixed(0)+"%";
         });
 
     // get info on temps
