@@ -34,7 +34,7 @@ function updateStatus(ip, apikey, index){
         //get filename of print
         document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
         // get estimation of print time left
-        document.getElementById("timeLeft"+index).innerHTML="Time left: "+json.progress.printTimeLeft/60 + " minutes";
+        document.getElementById("timeLeft"+index).innerHTML="Time left: "+(json.progress.printTimeLeft/60).toFixed(2) + " minutes";
         // get percentage of print completion
         document.getElementById("printPercent"+index).innerHTML=json.progress.completion.toFixed(0)+"%";
         });
@@ -58,31 +58,16 @@ function addPrinter(ip, apikey){
   var printerNum = numPrinters;
 
   // add HTML
-  // $('<div class="panel panel-primary">');
-  // $('<div class="panel-heading" id="printer'+printerNum+'Name">Printer 1</div>');
-  // $('<div class="panel-body">');
-  // $('<div id="printerInfo'+printerNum+'">');
-  // $('<p id="printerStatus'+printerNum+'">status</p>');
-  // $('<p id="e0Temp'+printerNum+'">0</p>');
-  // $('<p id="bedTemp'+printerNum+'">0</p>');
-  // $('<p id="currentFile'+printerNum+'">No active print</p>');
-  // $('<p id="printPercent'+printerNum+'">0%</p>');
-  // $('<p id="timeLeft'+printerNum+'">Print Time Left</p>');
-  // $('</div>');
-  // $('</div>');
-  // $('<div class="panel-footer" id="printerIP'+printerNum+'">ip</div>');
-  // $('</div>');
-
   $("#printerPanels").append('<div class="panel panel-primary">');
   $("#printerPanels").append('<div class="panel-heading" id="printerName'+printerNum+'">Printer 1</div>');
-  $("#printerPanels").append('<div class="panel-body">');
-  $("#printerPanels").append('<div id="printerInfo'+printerNum+'">');
-  $("#printerPanels").append('<p id="printerStatus'+printerNum+'">status</p>');
-  $("#printerPanels").append('<p id="e0Temp'+printerNum+'">0</p>');
-  $("#printerPanels").append('<p id="bedTemp'+printerNum+'">0</p>');
-  $("#printerPanels").append('<p id="currentFile'+printerNum+'">No active print</p>');
-  $("#printerPanels").append('<p id="printPercent'+printerNum+'">0%</p>');
-  $("#printerPanels").append('<p id="timeLeft'+printerNum+'">Print Time Left</p>');
+  $("#printerPanels").append('<div class="panel-body" id="body'+printerNum+'">');
+  $("#body"+printerNum).append('<div id="printerInfo'+printerNum+'">');
+  $("#body"+printerNum).append('<p id="printerStatus'+printerNum+'">status</p>');
+  $("#body"+printerNum).append('<p id="e0Temp'+printerNum+'">0</p>');
+  $("#body"+printerNum).append('<p id="bedTemp'+printerNum+'">0</p>');
+  $("#body"+printerNum).append('<p id="currentFile'+printerNum+'">No active print</p>');
+  $("#body"+printerNum).append('<p id="printPercent'+printerNum+'">0%</p>');
+  $("#body"+printerNum).append('<p id="timeLeft'+printerNum+'">Print Time Left</p>');
   $("#printerPanels").append('</div>');
   $("#printerPanels").append('</div>');
   $("#printerPanels").append('<div class="panel-footer" id="printerIP'+printerNum+'">ip</div>');
