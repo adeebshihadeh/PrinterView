@@ -1,8 +1,10 @@
 var printerIP = "prusa.local";
 var apiKey = "156A8AE4000940CFB3C51C9DFD812D8A";
+var refreshRate = 10000; // in milliseconds
 
 window.onload = function(){
     initialInfo();
+    setInterval(function () {updatePrinterStatus();}, refreshRate);
 }
 
 function initialInfo(){
