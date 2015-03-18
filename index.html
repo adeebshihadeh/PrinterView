@@ -1,25 +1,33 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Printer View</title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="index.js"></script>
-</head>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Printer View</title>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    </head>
 
-<body>
-    <h1 id="printerName">Welcome to Printer View</h1>
-    <h3 id="printerIP">printer ip</h3>
-    <div id="printerInfo">
-        <p id="printerStatus">status</p>
-        <p id="e0Temp">0</p>
-        <p id="bedTemp">0</p>
-        <p id="currentFile">No active print</p>
-        <p id="printPercent">0%</p>
-        </p>
-        <p id="timeLeft">Print Time Left</p>
-    </div>
-</body>
+    <body>
+        <h1>PrinterView</h1>
+        <div class="panel panel-primary">
+            <div class="panel-heading" id="printerName">Printer 1</div>
+            <div class="panel-body">
+                <div id="printerInfo">
+                    <p id="printerStatus">status</p>
+                    <p id="e0Temp">0</p>
+                    <p id="bedTemp">0</p>
+                    <p id="currentFile">No active print</p>
+                    <p id="printPercent">0%</p>
+                    <p id="timeLeft">Print Time Left</p>
+                </div>
+            </div>
+            <div class="panel-footer" id="printerIP">ip</div>
+        </div>
+    </body>
+
+    <script type="text/javascript" src="index.js"></script>
 </html>

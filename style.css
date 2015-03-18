@@ -1,10 +1,10 @@
 body{
   background-color: #7e7e7e;
-  color: white;
+  #color: white;
   text-align: center;
   font-family: sans-serif;
 }
 
 #printerInfo{
-  font-size: 145%;
+  #font-size: 145%;
 }
