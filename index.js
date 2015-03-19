@@ -90,6 +90,10 @@ function addPrinter(ip, apikey){
 function addFromModal(){
   var newIP = $("#newIP").val();
   var newApikey = $("#newApikey").val();
-
-  addPrinter(newIP, newApikey);
+  
+  if(newIP == ""|| newApikey == ""){
+  	alert("You are missing the API key and/or IP address.");
+  }else {
+  	addPrinter(newIP, newApikey);
+  }
 }
