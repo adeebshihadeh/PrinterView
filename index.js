@@ -92,7 +92,7 @@ function addFromModal(){
   var newApikey = $("#newApikey").val();
   
   if(newIP == ""|| newApikey == ""){
-  	alert("You are missing the API key and/or IP address.");
+  	$("#missingInfoModal").modal("show");
   }else {
   	addPrinter(newIP, newApikey);
   }
