@@ -9,7 +9,7 @@ window.onload = function(){
 
     //initialInfo();
     addPrinter("prusa.local", "156A8AE4000940CFB3C51C9DFD812D8A");
-    addPrinter("pb.local", "25A1AE457F3E4ACF854B80A51BA51776");
+    //addPrinter("pb.local", "25A1AE457F3E4ACF854B80A51BA51776");
     // addPrinter(" ", "156A8AE4000940CFB3C51C9DFD812D8A");
     // addPrinter(" ", "25A1AE457F3E4ACF854B80A51BA51776");
     setInterval(function () {updatePrinters();}, refreshRate);
@@ -85,4 +85,11 @@ function addPrinter(ip, apikey){
   initialInfo(ip, apikey, printerNum);
 
   numPrinters++;
+}
+
+function addFromModal(){
+  var newIP = $("#newIP").val();
+  var newApikey = $("#newApikey").val();
+
+  addPrinter(newIP, newApikey);
 }
