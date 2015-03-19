@@ -95,5 +95,7 @@ function addFromModal(){
   	$("#missingInfoModal").modal("show");
   }else {
   	addPrinter(newIP, newApikey);
+  	$("#newIP").val("");
+  	$("#newApikey").val("");
   }
 }
