@@ -3,19 +3,24 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="style.css">
-        <title>Printer View</title>
+        <title>PrinterView</title>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     </head>
 
     <body>
-  		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPrinterModal">
-  		  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-  		</button>
+        <nav class="navbar navbar-default">
+            <h1>PrinterView</h1>
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPrinterModal" id="addPrinterBtn">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </nav>
 
         <div id="printerPanels"></div>
 
@@ -44,7 +49,7 @@
   			</div>
   		  </div>
   		</div>
-  		
+
 	<div class="modal fade" id="missingInfoModal" tabindex="-1" role="dialog" aria-labelledby="missingInfoModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 		<div class="modal-content">
