@@ -5,13 +5,17 @@ var printers ={
     "apikey":[]
 };
 
+// TODO
+// verify octoprint ip and apikey
+// remove printers
+// fix progress bar
+// save/cache printer IPs and API keys
+
 window.onload = function(){
 
     //initialInfo();
     addPrinter("prusa.local", "156A8AE4000940CFB3C51C9DFD812D8A");
     //addPrinter("pb.local", "25A1AE457F3E4ACF854B80A51BA51776");
-    // addPrinter(" ", "156A8AE4000940CFB3C51C9DFD812D8A");
-    // addPrinter(" ", "25A1AE457F3E4ACF854B80A51BA51776");
     setInterval(function () {updatePrinters();}, refreshRate);
 }
 
@@ -75,7 +79,7 @@ function addPrinter(ip, apikey){
   $("#progress"+printerNum).append('<div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 20%"  id="progressBar'+printerNum+'"></div>');
   $("#progressBar"+printerNum).append('<span class="sr-only" id="progressPercent'+printerNum+'">15% Complete</span>');
 
-  $("#printerPanels").append('<div class="panel-footer" id="printerIP'+printerNum+'">ip</div>');
+  $("#panel"+printerNum).append('<div class="panel-footer" id="printerIP'+printerNum+'">ip</div>');
 
   // store ip and apikey info
   printers.ip[printerNum]=ip;
@@ -90,7 +94,7 @@ function addPrinter(ip, apikey){
 function addFromModal(){
   var newIP = $("#newIP").val();
   var newApikey = $("#newApikey").val();
-  
+
   if(newIP == ""|| newApikey == ""){
   	$("#missingInfoModal").modal("show");
   }else {
