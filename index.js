@@ -1,4 +1,4 @@
-var refreshRate = 10000; // in milliseconds
+var refreshRate = 5000; // in milliseconds
 var numPrinters = 0;
 var printers = new Object;
 
@@ -50,12 +50,25 @@ function updateStatus(ip, apikey, index){
         // get printer state
         document.getElementById("printerStatus"+index).innerHTML="State: "+json.state;
         //get filename of print
-        document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
-        // get estimation of print time left
-        document.getElementById("timeLeft"+index).innerHTML="Time left: "+(json.progress.printTimeLeft/60).toFixed(2) + " minutes";
-        // get percentage of print completion
-        document.getELementById("#progress"+index).attr("aria-valuenow", json.progress.completion.toFixed(0)*1);
-        document.getElementById("#progressBar"+index).innerHTML=json.progress.completion.toFixed(0)*1+"%";
+        if(json.job.file.name === null){
+            // set current file to no file selected
+            document.getElementById("currentFile"+index).innerHTML="No file selected";
+            // set time left field to no active print
+            document.getElementById("timeLeft"+index).innerHTML="No active print";
+        }else if(json.progress.printTimeLeft === null) {
+            // set filename of current print
+            document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
+            // set time left field to no active print
+            document.getElementById("timeLeft"+index).innerHTML="No active print";
+        }else {
+            // set filename of current print
+            document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
+            // set estimation of print time left
+            document.getElementById("timeLeft"+index).innerHTML="Time left: "+(json.progress.printTimeLeft/60).toFixed(2) + " minutes";
+            // set percentage of print completion
+            document.getElementById("progressBar"+index).setAttribute("aria-valuenow", json.progress.completion);
+        }
+        //document.getElementById("progressPercent"+index).innerHTML=json.progress.completion.toFixed(0)*1+"%";
     });
 
     // get info on temps
