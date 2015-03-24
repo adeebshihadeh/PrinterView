@@ -5,8 +5,7 @@ var printers = new Object;
 // TODO
 // verify octoprint ip and apikey
 // remove printers
-// fix progress bar
-// save/cache printer IPs and API keys
+// switch to sockJS
 
 window.onload = function(){
     // get saved printers
@@ -55,20 +54,23 @@ function updateStatus(ip, apikey, index){
             document.getElementById("currentFile"+index).innerHTML="No file selected";
             // set time left field to no active print
             document.getElementById("timeLeft"+index).innerHTML="No active print";
+            // set print progress bar perecent to 0
+            $("div#progressBar0").css("width", "0%");
         }else if(json.progress.printTimeLeft === null) {
             // set filename of current print
             document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
             // set time left field to no active print
             document.getElementById("timeLeft"+index).innerHTML="No active print";
+            // set print progress bar perecent to 0
+            $("div#progressBar0").css("width", "0%");
         }else {
             // set filename of current print
             document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
             // set estimation of print time left
             document.getElementById("timeLeft"+index).innerHTML="Time left: "+(json.progress.printTimeLeft/60).toFixed(2) + " minutes";
             // set percentage of print completion
-            document.getElementById("progressBar"+index).setAttribute("aria-valuenow", json.progress.completion);
+            $("div#progressBar0").css("width", json.progress.completion);
         }
-        //document.getElementById("progressPercent"+index).innerHTML=json.progress.completion.toFixed(0)*1+"%";
     });
 
     // get info on temps
