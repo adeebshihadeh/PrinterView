@@ -104,8 +104,7 @@ function addPrinter(ip, apikey){
     $("#body"+printerNum).append('<p id="timeLeft'+printerNum+'">Print Time Left</p>');
 
     $("#body"+printerNum).append('<div class="progress" id="progress'+printerNum+'"></div>');
-    $("#progress"+printerNum).append('<div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 20%"  id="progressBar'+printerNum+'"></div>');
-    $("#progressBar"+printerNum).append('<span class="sr-only" id="progressPercent'+printerNum+'">15% Complete</span>');
+    $("#progress"+printerNum).append('<div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"  id="progressBar'+printerNum+'"></div>');
 
     $("#panel"+printerNum).append('<div class="panel-footer" id="printerIP'+printerNum+'">ip</div>');
 
