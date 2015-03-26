@@ -138,6 +138,13 @@ function addFromModal(){
 function deletePrinters(){
 	// remove the printers from localStorage
 	localStorage.removeItem("savedPrinters");
-	// refresh the page
-	location.reload();
+	// remove the printers from the printers object
+    printers ={
+        "ip":[],
+    	"apikey":[]
+	};
+	// reset the number of printers
+	numPrinters=0;
+	// remove all elements within the grid
+	$("#printerGrid").empty();
 }
