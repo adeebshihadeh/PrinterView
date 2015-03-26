@@ -93,7 +93,8 @@ function addPrinter(ip, apikey){
     var printerNum = numPrinters;
 
     // add HTML
-    $("#printerPanels").append('<div class="panel panel-primary" id="panel'+printerNum+'"></div>');
+    $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
+    $("#printer"+printerNum).append('<div class="panel panel-primary" id="panel'+printerNum+'"></div>');
     $("#panel"+printerNum).append('<div class="panel-heading" id="printerName'+printerNum+'">Printer Name</div>');
     $("#panel"+printerNum).append('<div class="panel-body" id="body'+printerNum+'"></div>');
 
