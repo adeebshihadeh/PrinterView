@@ -134,3 +134,10 @@ function addFromModal(){
         $("#newApikey").val("");
     }
 }
+
+function deletePrinters(){
+	// remove the printers from localStorage
+	localStorage.removeItem("savedPrinters");
+	// refresh the page
+	location.reload();
+}
