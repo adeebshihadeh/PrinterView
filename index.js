@@ -81,7 +81,7 @@ function updateStatus(ip, apikey, index){
             // set estimation of print time left
             document.getElementById("timeLeft"+index).innerHTML="Time left: "+(json.progress.printTimeLeft/60).toFixed(2) + " minutes";
             // set percentage of print completion
-            $("div#progressBar0").css("width", json.progress.completion + "%");
+            $("div#progressBar"+index).css("width", json.progress.completion + "%");
         }
     });
 
