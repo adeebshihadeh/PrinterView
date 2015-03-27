@@ -103,7 +103,7 @@ function updatePrinters(){
 function addPrinter(ip, apikey){
     var printerNum = numPrinters;
 
-    var removeButton = '<button type="button" class="btn btn-default btn-lg" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
+    var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
 
     // add HTML
     $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
@@ -153,7 +153,7 @@ function deletePrinters(){
 	// remove the printers from localStorage
 	localStorage.removeItem("savedPrinters");
 	// remove the printers from the printers object
-    printers ={
+  printers ={
         "ip":[],
     	"apikey":[]
 	};
