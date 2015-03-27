@@ -29,10 +29,12 @@ function reloadPrinters(){
 }
 
 function initialInfo(ip, apikey, index){
+  var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+index+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
+
   // add apikey header to GET request
   $.ajaxSetup({headers:{"X-Api-Key" : apikey}});
   // get name of the printer
-  $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name;});
+  $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name+removeButton;});
   document.getElementById("printerIP"+index).innerHTML = ip;
 
   updateStatus(ip, apikey, index);
@@ -111,7 +113,6 @@ function updatePrinters(){
 
 function addPrinter(ip, apikey){
   var printerNum = numPrinters;
-
   var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
 
   // add HTML
