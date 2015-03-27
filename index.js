@@ -220,7 +220,7 @@ function checkConnection(ip, apikey){
 	$.ajaxSetup({headers:{"X-Api-Key" : apikey}});
 	$.getJSON("http://"+ip+"/api/version", function(json){
 		console.log("dbfbd");
-		if(json.api != null){
+		if(json.api !== null){
 			connected = true;
 		}else {
 			connected = false;
