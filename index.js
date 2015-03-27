@@ -188,7 +188,9 @@ function removePrinter(index){
     }else {
       localStorage.setItem("savedPrinters", JSON.stringify(printers));
     }
-    location.reload();
+    numPrinters = 0;
+    $("#printerGrid").empty();
+    reloadPrinters();
   }
 }
 
