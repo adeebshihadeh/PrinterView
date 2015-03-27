@@ -44,6 +44,18 @@ function updateStatus(ip, apikey, index){
     // add apikey header to GET request
     $.ajaxSetup({headers:{"X-Api-Key" : apikey}});
 
+    // check for connection to printer
+    $.getJSON("http://"+ip+"/api/version", function(json){
+      if(json.api === null){
+        document.getElementById("panel"+index).className = "panel panel-danger";
+      }else {
+        document.getElementById("panel"+index).className = "panel panel-primary";
+      }
+    })
+    .error(function() {
+      document.getElementById("panel"+index).className = "panel panel-danger";
+    });
+
     // get info on current print job
     $.getJSON("http://"+ip+"/api/job", function(json){
         // get printer state
