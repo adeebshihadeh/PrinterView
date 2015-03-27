@@ -174,24 +174,28 @@ function deletePrinters(){
 }
 
 function removePrinter(index){
-  if(confirm("Remove printer #"+(index+1)+"?")){
-    // remove the printer from the page
-    document.getElementById("printer"+index).remove();
+	var printerNum = index+1;
+  bootbox.confirm("Remove printer #"+(printerNum)+"?", function(result) {
+  	if(result){
+			// remove the printer from the page
+			document.getElementById("printer"+index).remove();
 
-    // remove the printer from the printers object
-    printers.ip.splice(index, 1);
-    printers.apikey.splice(index, 1);
+			// remove the printer from the printers object
+			printers.ip.splice(index, 1);
+			printers.apikey.splice(index, 1);
 
-    // save new object to localStorage
-    if(numPrinters <= 1){
-      localStorage.removeItem("savedPrinters");
-    }else {
-      localStorage.setItem("savedPrinters", JSON.stringify(printers));
-    }
-    numPrinters = 0;
-    $("#printerGrid").empty();
-    reloadPrinters();
-  }
+			// save new object to localStorage
+			if(numPrinters <= 1){
+				localStorage.removeItem("savedPrinters");
+			}else {
+				localStorage.setItem("savedPrinters", JSON.stringify(printers));
+			}
+			numPrinters = 0;
+			$("#printerGrid").empty();
+			reloadPrinters();
+
+  	}
+	}); 
 }
 
 function makeBlank(index){
