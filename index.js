@@ -1,6 +1,6 @@
 var refreshRate = 5000; // in milliseconds
 var numPrinters = 0;
-var printers = new Object;
+var printers = new Object();
 
 // TODO
 // verify octoprint ip and apikey
@@ -13,10 +13,10 @@ window.onload = function(){
 
     // update printer info
     setInterval(function () {updatePrinters();}, refreshRate);
-}
+};
 
 function reloadPrinters(){
-    if(localStorage.getItem("savedPrinters") == null){
+    if(localStorage.getItem("savedPrinters") === null){
         printers ={
             "ip":[],
             "apikey":[]
@@ -34,7 +34,7 @@ function initialInfo(ip, apikey, index){
     // add apikey header to GET request
     $.ajaxSetup({headers:{"X-Api-Key" : apikey}});
     // get name of the printer
-    $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name});
+    $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name;});
     document.getElementById("printerIP"+index).innerHTML = ip;
 
     updateStatus(ip, apikey, index);
@@ -140,7 +140,7 @@ function addFromModal(){
     var newIP = $("#newIP").val();
     var newApikey = $("#newApikey").val();
 
-    if(newIP == ""|| newApikey == ""){
+    if(newIP === ""|| newApikey === ""){
         $("#missingInfoModal").modal("show");
     }else {
         addPrinter(newIP, newApikey);
@@ -158,7 +158,7 @@ function deletePrinters(){
     	"apikey":[]
 	};
 	// reset the number of printers
-	numPrinters=0;
+	numPrinters = 0;
 	// remove all elements within the grid
 	$("#printerGrid").empty();
 }
@@ -178,7 +178,6 @@ function removePrinter(index){
     }else {
       localStorage.setItem("savedPrinters", JSON.stringify(printers));
     }
-
     location.reload();
   }
 }
