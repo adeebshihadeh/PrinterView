@@ -8,5 +8,12 @@ Desktop:
 * Open index.html in your browser
 * Start adding printers
 
+or
+
+Universal
+* Go to [http://quillford.github.io/PrinterView/](http://quillford.github.io/PrinterView/) in your browser
+* Bookmark (or add to home screen)
+* Add printers
+
 # Screenshots
 ![screenshot](https://raw.githubusercontent.com/quillford/PrinterView/master/images/screenshots/screenshot1.png)
