@@ -115,8 +115,6 @@ function addPrinter(ip, apikey){
   var printerNum = numPrinters;
   var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
 
-	checkConnection(ip, apikey);
-
   // add HTML
   $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
   $("#printer"+printerNum).append('<div class="panel panel-primary" id="panel'+printerNum+'"></div>');
@@ -155,7 +153,7 @@ function addFromModal(){
   if(newIP === ""|| newApikey === ""){
       $("#missingInfoModal").modal("show");
   }else {
-      addPrinter(newIP, newApikey);
+      checkConnection(newIP, newApikey);
       $("#newIP").val("");
       $("#newApikey").val("");
   }
@@ -216,19 +214,31 @@ function makeBlank(index){
 }
 
 function checkConnection(ip, apikey){
-	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at "+ip+" using the following API key: "+apikey+". Remember to include the port of your OctoPrint instance in the IP Address field.";
+	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at "+ip+" using the following API key: "+apikey+". Remember to include the port of your OctoPrint instance in the IP Address field. Do you still want to add this printer?";
+	var connected = false;
+	
 	$.ajaxSetup({headers:{"X-Api-Key" : apikey}});
 	$.getJSON("http://"+ip+"/api/version", function(json){
 		console.log("dbfbd");
 		if(json.api != null){
-			return true;
+			connected = true;
 		}else {
-			bootbox.alert(errorMessage);
-			return false;
+			connected = false;
 		}
 	})
 	.error(function(){
-		bootbox.alert(errorMessage);
-		return false;
+		connected = false;
 	});
+	
+	if(connected){
+		addPrinter(ip, apikey);
+	}else {
+		bootbox.confirm(errorMessage, function(result){
+			if(result){
+				addPrinter(ip, apikey);
+			}else {
+				return 0;
+			}
+		});
+	}
 }
