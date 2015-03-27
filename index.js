@@ -4,7 +4,6 @@ var printers = new Object();
 
 // TODO
 // verify octoprint ip and apikey
-// remove printers
 // switch to sockJS
 
 window.onload = function(){
@@ -47,13 +46,14 @@ function updateStatus(ip, apikey, index){
     // check for connection to printer
     $.getJSON("http://"+ip+"/api/version", function(json){
       if(json.api === null){
-        document.getElementById("panel"+index).className = "panel panel-danger";
+        makeBlank(index);
       }else {
         document.getElementById("panel"+index).className = "panel panel-primary";
       }
     })
     .error(function() {
-      document.getElementById("panel"+index).className = "panel panel-danger";
+      //document.getElementById("panel"+index).className = "panel panel-danger";
+      makeBlank(index);
     });
 
     // get info on current print job
@@ -67,14 +67,14 @@ function updateStatus(ip, apikey, index){
             // set time left field to no active print
             document.getElementById("timeLeft"+index).innerHTML="No active print";
             // set print progress bar perecent to 0
-            $("div#progressBar0").css("width", "0%");
+            $("div#progressBar"+index ).css("width", "0%");
         }else if(json.progress.printTimeLeft === null) {
             // set filename of current print
             document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
             // set time left field to no active print
             document.getElementById("timeLeft"+index).innerHTML="No active print";
             // set print progress bar perecent to 0
-            $("div#progressBar0").css("width", "0%");
+            $("div#progressBar"+index).css("width", "0%");
         }else {
             // set filename of current print
             document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
@@ -83,7 +83,12 @@ function updateStatus(ip, apikey, index){
             // set percentage of print completion
             $("div#progressBar"+index).css("width", json.progress.completion + "%");
         }
+    })
+    .error(function() {
+      document.getElementById("panel"+index).className = "panel panel-danger";
+      makeBlank(index);
     });
+
 
     // get info on temps
     $.getJSON("http://"+ip+"/api/printer", function(json){
@@ -91,7 +96,12 @@ function updateStatus(ip, apikey, index){
         document.getElementById("e0Temp"+index).innerHTML="Extruder: "+json.temperature.tool0.actual+"°/"+json.temperature.tool0.target+"°";
         // get temp of the bed and its target temp
         document.getElementById("bedTemp"+index).innerHTML="Bed: "+json.temperature.bed.actual+"°/"+json.temperature.bed.target+"°";
+    })
+    .error(function() {
+      document.getElementById("panel"+index).className = "panel panel-danger";
+      makeBlank(index);
     });
+
 }
 
 function updatePrinters(){
@@ -164,7 +174,7 @@ function deletePrinters(){
 }
 
 function removePrinter(index){
-  if(confirm("Remove printer #"+index+"?")){
+  if(confirm("Remove printer #"+(index+1)+"?")){
     // remove the printer from the page
     document.getElementById("printer"+index).remove();
 
@@ -180,4 +190,19 @@ function removePrinter(index){
     }
     location.reload();
   }
+}
+
+function makeBlank(index){
+  // make panel border color red
+  document.getElementById("panel"+index).className = "panel panel-danger";
+  // make the status fields blank
+  document.getElementById("printerStatus"+index).innerHTML="";
+  document.getElementById("e0Temp"+index).innerHTML="";
+  document.getElementById("bedTemp"+index).innerHTML="";
+  document.getElementById("currentFile"+index).innerHTML="";
+  document.getElementById("timeLeft"+index).innerHTML="";
+  // set progress bar to 100%
+  $("div#progressBar"+index).css("width", "100%");
+  // set panel footer to printer ip with not connected messgae
+  document.getElementById("printerIP"+index).innerHTML = printers.ip[index]+" (not connected)";
 }
