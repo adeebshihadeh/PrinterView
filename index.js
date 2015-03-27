@@ -3,8 +3,8 @@ var numPrinters = 0;
 var printers = new Object();
 
 // TODO
-// verify octoprint ip and apikey
 // switch to sockJS
+// possibly include port field in the Add Printer modal
 
 window.onload = function(){
   // get saved printers
@@ -115,6 +115,8 @@ function addPrinter(ip, apikey){
   var printerNum = numPrinters;
   var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
 
+	checkConnection(ip, apikey);
+
   // add HTML
   $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
   $("#printer"+printerNum).append('<div class="panel panel-primary" id="panel'+printerNum+'"></div>');
@@ -211,4 +213,22 @@ function makeBlank(index){
   $("div#progressBar"+index).css("width", "100%");
   // set panel footer to printer ip with not connected messgae
   document.getElementById("printerIP"+index).innerHTML = printers.ip[index]+" (not connected)";
+}
+
+function checkConnection(ip, apikey){
+	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at "+ip+" using the following API key: "+apikey+". Remember to include the port of your OctoPrint instance in the IP Address field.";
+	$.ajaxSetup({headers:{"X-Api-Key" : apikey}});
+	$.getJSON("http://"+ip+"/api/version", function(json){
+		console.log("dbfbd");
+		if(json.api != null){
+			return true;
+		}else {
+			bootbox.alert(errorMessage);
+			return false;
+		}
+	})
+	.error(function(){
+		bootbox.alert(errorMessage);
+		return false;
+	});
 }
