@@ -81,7 +81,7 @@ function updateStatus(ip, apikey, index){
             // set estimation of print time left
             document.getElementById("timeLeft"+index).innerHTML="Time left: "+(json.progress.printTimeLeft/60).toFixed(2) + " minutes";
             // set percentage of print completion
-            $("div#progressBar0").css("width", json.progress.completion);
+            $("div#progressBar"+index).css("width", json.progress.completion + "%");
         }
     });
 
@@ -101,13 +101,15 @@ function updatePrinters(){
 }
 
 function addPrinter(ip, apikey){
-    //var numPrinters = printers.ip.length;
     var printerNum = numPrinters;
+
+    var removeButton = '<button type="button" class="btn btn-default btn-lg" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
 
     // add HTML
     $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
     $("#printer"+printerNum).append('<div class="panel panel-primary" id="panel'+printerNum+'"></div>');
-    $("#panel"+printerNum).append('<div class="panel-heading" id="printerName'+printerNum+'">Printer Name</div>');
+    $("#panel"+printerNum).append('<div class="panel-heading" id="printerName'+printerNum+'">Printer Name'+removeButton+'</div>');
+
     $("#panel"+printerNum).append('<div class="panel-body" id="body'+printerNum+'"></div>');
 
     $("#body"+printerNum).append('<p id="printerStatus'+printerNum+'">status</p>');
@@ -159,4 +161,24 @@ function deletePrinters(){
 	numPrinters=0;
 	// remove all elements within the grid
 	$("#printerGrid").empty();
+}
+
+function removePrinter(index){
+  if(confirm("Remove printer #"+index+"?")){
+    // remove the printer from the page
+    document.getElementById("printer"+index).remove();
+
+    // remove the printer from the printers object
+    printers.ip.splice(index, 1);
+    printers.apikey.splice(index, 1);
+
+    // save new object to localStorage
+    if(numPrinters <= 1){
+      localStorage.removeItem("savedPrinters");
+    }else {
+      localStorage.setItem("savedPrinters", JSON.stringify(printers));
+    }
+
+    location.reload();
+  }
 }
