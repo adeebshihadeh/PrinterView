@@ -45,8 +45,6 @@ function initialInfo(ip, apikey, index){
 }
 
 function updateStatus(ip, apikey, index){
-  document.getElementById("printerIP"+index).innerHTML = ip;
-
   // add apikey header to GET request
   $.ajaxSetup({headers:{"X-Api-Key" : apikey}});
 
@@ -56,6 +54,7 @@ function updateStatus(ip, apikey, index){
       makeBlank(index);
     }else {
       document.getElementById("panel"+index).className = "panel panel-primary";
+      document.getElementById("printerIP"+index).innerHTML = ip;
     }
   })
   .error(function() {
