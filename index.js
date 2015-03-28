@@ -124,7 +124,7 @@ function updatePrinters(){
 function addPrinter(ip, apikey){
   var printerNum = numPrinters;
   var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
-  var octoPrintPageButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printerNum+'/><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>';
+  var octoPrintPageButton = '<a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printers.ip[printerNum]+'/" target="_blank"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>';
 
   // add HTML
   $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
