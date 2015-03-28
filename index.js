@@ -5,6 +5,8 @@ var printers = new Object();
 // TODO
 // switch to sockJS
 // possibly include port field in the Add Printer modal
+// edit existing saved printers
+// reorder printers
 
 window.onload = function(){
   // get saved printers
@@ -41,6 +43,8 @@ function initialInfo(ip, apikey, index){
 }
 
 function updateStatus(ip, apikey, index){
+  document.getElementById("printerIP"+index).innerHTML = ip;
+
   // add apikey header to GET request
   $.ajaxSetup({headers:{"X-Api-Key" : apikey}});
 
@@ -195,7 +199,7 @@ function removePrinter(index){
 			reloadPrinters();
 
   	}
-	}); 
+	});
 }
 
 function makeBlank(index){
@@ -216,7 +220,7 @@ function makeBlank(index){
 function checkConnection(ip, apikey){
 	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at "+ip+" using the following API key: "+apikey+". Remember to include the port of your OctoPrint instance in the IP Address field. Do you still want to add this printer?";
 	var connected = false;
-	
+
 	$.ajaxSetup({headers:{"X-Api-Key" : apikey}});
 	$.getJSON("http://"+ip+"/api/version", function(json){
 		console.log("dbfbd");
@@ -229,7 +233,7 @@ function checkConnection(ip, apikey){
 	.error(function(){
 		connected = false;
 	});
-	
+
 	if(connected){
 		addPrinter(ip, apikey);
 	}else {
