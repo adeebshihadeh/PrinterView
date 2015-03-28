@@ -7,6 +7,7 @@ var printers = new Object();
 // possibly include port field in the Add Printer modal
 // edit existing saved printers
 // reorder printers
+// button to launch octoprint page of printer
 
 window.onload = function(){
   // get saved printers
@@ -100,7 +101,11 @@ function updateStatus(ip, apikey, index){
       // get temp of extruder 0 and its target temp
       document.getElementById("e0Temp"+index).innerHTML="Extruder: "+json.temperature.tool0.actual+"°/"+json.temperature.tool0.target+"°";
       // get temp of the bed and its target temp
-      document.getElementById("bedTemp"+index).innerHTML="Bed: "+json.temperature.bed.actual+"°/"+json.temperature.bed.target+"°";
+      if(typeof json.temperature.bed!=="undefined"){
+        document.getElementById("bedTemp"+index).innerHTML="Bed: "+json.temperature.bed.actual+"°/"+json.temperature.bed.target+"°";
+      }else {
+        document.getElementById("bedTemp"+index).innerHTML="0°";
+      }
   })
   .error(function() {
     document.getElementById("panel"+index).className = "panel panel-danger";
