@@ -33,11 +33,12 @@ function reloadPrinters(){
 
 function initialInfo(ip, apikey, index){
   var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+index+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
+  var octoPrintPageButton = '<a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printers.ip[index]+'/" target="_blank"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>';
 
   // add apikey header to GET request
   $.ajaxSetup({headers:{"X-Api-Key" : apikey}});
   // get name of the printer
-  $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name+removeButton;});
+  $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name+removeButton+octoPrintPageButton;});
   document.getElementById("printerIP"+index).innerHTML = ip;
 
   updateStatus(ip, apikey, index);
@@ -123,11 +124,12 @@ function updatePrinters(){
 function addPrinter(ip, apikey){
   var printerNum = numPrinters;
   var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
+  var octoPrintPageButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printerNum+'/><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>';
 
   // add HTML
   $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
   $("#printer"+printerNum).append('<div class="panel panel-primary" id="panel'+printerNum+'"></div>');
-  $("#panel"+printerNum).append('<div class="panel-heading" id="printerName'+printerNum+'">Printer Name'+removeButton+'</div>');
+  $("#panel"+printerNum).append('<div class="panel-heading" id="printerName'+printerNum+'">Printer Name'+removeButton+octoPrintPageButton+'</div>');
 
   $("#panel"+printerNum).append('<div class="panel-body" id="body'+printerNum+'"></div>');
 
