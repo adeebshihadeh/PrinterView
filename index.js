@@ -37,7 +37,12 @@ function initialInfo(ip, apikey, index){
   $.ajaxSetup({headers:{"X-Api-Key" : apikey}});
   // get name of the printer
   $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name;});
-  document.getElementById("printerIP"+index).innerHTML = ip;
+  // set the panel footer as the printer's ip
+  if(ip.indexOf(":80")===-1){
+    document.getElementById("printerIP"+index).innerHTML = ip;
+  }else {
+    document.getElementById("printerIP"+index).innerHTML = ip.replace(":80", "");
+  }
 
   updateStatus(ip, apikey, index);
 }
@@ -52,7 +57,7 @@ function updateStatus(ip, apikey, index){
       makeBlank(index);
     }else {
       document.getElementById("panel"+index).className = "panel panel-primary";
-      document.getElementById("printerIP"+index).innerHTML = ip;
+      initialInfo(ip, apikey);
     }
   })
   .error(function() {
@@ -156,14 +161,17 @@ function addPrinter(ip, apikey){
 
 function addFromModal(){
   var newIP = $("#newIP").val();
+  var newPort = $("#newPort").val();
   var newApikey = $("#newApikey").val();
 
-  if(newIP === ""|| newApikey === ""){
-      $("#missingInfoModal").modal("show");
+  if(newIP === ""|| newApikey === "" || newPort == ""){
+    $("#missingInfoModal").modal("show");
   }else {
-      testConnection(newIP, newApikey);
-      $("#newIP").val("");
-      $("#newApikey").val("");
+    var ipAddress = newIP + ":" + newPort;
+    testConnection(ipAddress, newApikey);
+    $("#newIP").val("");
+    $("#newPort").val("80");
+    $("#newApikey").val("");
   }
 }
 
@@ -222,7 +230,7 @@ function makeBlank(index){
 }
 
 function connectionError(ip, apikey){
-	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at <b>"+ip+"</b> using the following API key: "+apikey+". Remember to <b>include the port</b> of your OctoPrint instance in the IP Address field. Do you still want to add this printer?";
+	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at <b>"+ip+"</b> using the following API key: "+apikey+". Do you still want to add this printer?";
 
 	bootbox.confirm(errorMessage, function(result){
 		if(result){
