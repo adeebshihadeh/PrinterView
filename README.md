@@ -3,17 +3,11 @@ a simple web app for viewing the status of multiple printers in a single page
 
 # Installation
 
-Desktop:
-* Download this repository
-* Open index.html in your browser
-* Start adding printers
+Go to [quillford.github.io/PrinterView](quillford.github.io/PrinterView)
 
-or
+[Desktop](https://github.com/quillford/PrinterView/wiki/Desktop-Setup)
 
-Universal (Mobile & Desktop)
-* Go to [http://quillford.github.io/PrinterView/](http://quillford.github.io/PrinterView/) in your browser
-* Bookmark (or add to home screen)
-* Add printers
+[iOS](https://github.com/quillford/PrinterView/wiki/iOS-Setup)
 
 # Acknowledgements
 PrinterView uses the following:
