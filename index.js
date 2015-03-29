@@ -57,7 +57,7 @@ function updateStatus(ip, apikey, index){
       makeBlank(index);
     }else {
       document.getElementById("panel"+index).className = "panel panel-primary";
-      initialInfo(ip, apikey);
+      initialInfo(ip, apikey, index);
     }
   })
   .error(function() {
@@ -126,7 +126,7 @@ function addPrinter(ip, apikey){
   $("#printer"+printerNum).append('<div class="panel panel-primary" id="panel'+printerNum+'"></div>');
 
   $("#panel"+printerNum).append('<div class="panel-heading clearfix" id="panelHeading'+printerNum+'"></div>');
-  $("#panelHeading"+printerNum).append('<h4 class="panel-title pull-left" style="padding-top: 7.5px;" id="printerName'+printerNum+'"">Printer Name</h4></h4>');
+  $("#panelHeading"+printerNum).append('<h4 class="panel-title pull-left" style="padding-top: 7.5px;" id="printerName'+printerNum+'">Printer Name</h4></h4>');
   $("#panelHeading"+printerNum).append('<div class="btn-group pull-right" id="btnGroup'+printerNum+'"></div>');
   $("#btnGroup"+printerNum).append('<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true" id="menuBtn'+printerNum+'"></span></button>');
   $("#btnGroup"+printerNum).append('<ul class="dropdown-menu" role="menu" id="dropdown'+printerNum+'"></ul>');
