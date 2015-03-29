@@ -9,6 +9,8 @@ Go to [quillford.github.io/PrinterView](http://quillford.github.io/PrinterView/)
 
 [iOS](https://github.com/quillford/PrinterView/wiki/iOS-Setup)
 
+[Android](https://github.com/quillford/PrinterView/wiki/Android-Setup)
+
 # Acknowledgements
 PrinterView uses the following:
 * [jQuery](https://jquery.com/)
