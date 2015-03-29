@@ -8,7 +8,6 @@ var printers = new Object();
 // edit existing saved printers
 // reorder printers
 // checkbox for minimizing and not updating a printer
-// toolbar button for printers
 
 window.onload = function(){
   // get saved printers
@@ -33,13 +32,10 @@ function reloadPrinters(){
 }
 
 function initialInfo(ip, apikey, index){
-  var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+index+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
-  var octoPrintPageButton = '<a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printers.ip[index]+'/" target="_blank"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>';
-
   // add apikey header to GET request
   $.ajaxSetup({headers:{"X-Api-Key" : apikey}});
   // get name of the printer
-  $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name+removeButton+octoPrintPageButton;});
+  $.getJSON("http://"+ip+"/api/printerprofiles", function(json){document.getElementById("printerName"+index).innerHTML=json.profiles._default.name;});
   document.getElementById("printerIP"+index).innerHTML = ip;
 
   updateStatus(ip, apikey, index);
@@ -116,13 +112,20 @@ function updatePrinters(){
 
 function addPrinter(ip, apikey){
   var printerNum = numPrinters;
-  var removeButton = '<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
-  var octoPrintPageButton = '<a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printers.ip[printerNum]+'/" target="_blank"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>';
+  var removeButton = '<li><button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></li>';
+  var octoPrintPageButton = '<li><a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printers.ip[printerNum]+'/" target="_blank"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>';
 
   // add HTML
   $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
   $("#printer"+printerNum).append('<div class="panel panel-primary" id="panel'+printerNum+'"></div>');
-  $("#panel"+printerNum).append('<div class="panel-heading" id="printerName'+printerNum+'">Printer Name'+removeButton+octoPrintPageButton+'</div>');
+
+  $("#panel"+printerNum).append('<div class="panel-heading clearfix" id="panelHeading'+printerNum+'"></div>');
+  $("#panelHeading"+printerNum).append('<h4 class="panel-title pull-left" style="padding-top: 7.5px;" id="printerName'+printerNum+'"">Printer Name</h4></h4>');
+  $("#panelHeading"+printerNum).append('<div class="btn-group pull-right" id="btnGroup'+printerNum+'"></div>');
+  $("#btnGroup"+printerNum).append('<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true" id="menuBtn'+printerNum+'"></span></button>');
+  $("#btnGroup"+printerNum).append('<ul class="dropdown-menu" role="menu" id="dropdown'+printerNum+'"></ul>');
+  $("#dropdown"+printerNum).append(removeButton);
+  $("#dropdown"+printerNum).append(octoPrintPageButton);
 
   $("#panel"+printerNum).append('<div class="panel-body" id="body'+printerNum+'"></div>');
 
