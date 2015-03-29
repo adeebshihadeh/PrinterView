@@ -7,7 +7,8 @@ var printers = new Object();
 // possibly include port field in the Add Printer modal
 // edit existing saved printers
 // reorder printers
-// button to launch octoprint page of printer
+// checkbox for minimizing and not updating a printer
+// toolbar button for printers
 
 window.onload = function(){
   // get saved printers
@@ -74,13 +75,6 @@ function updateStatus(ip, apikey, index){
           document.getElementById("timeLeft"+index).innerHTML="No active print";
           // set print progress bar perecent to 0
           $("div#progressBar"+index ).css("width", "0%");
-      }else if(json.progress.printTimeLeft === null) {
-          // set filename of current print
-          document.getElementById("currentFile"+index).innerHTML=json.job.file.name.split(".").slice(0, -1).join(".");
-          // set time left field to no active print
-          document.getElementById("timeLeft"+index).innerHTML="No active print";
-          // set print progress bar perecent to 0
-          $("div#progressBar"+index).css("width", "0%");
       }else {
           // set filename of current print
           document.getElementById("currentFile"+index).innerHTML="File: "+json.job.file.name.split(".").slice(0, -1).join(".");
