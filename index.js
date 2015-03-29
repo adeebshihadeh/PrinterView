@@ -92,7 +92,6 @@ function updateStatus(ip, apikey, index){
       // get temp of extruder 0 and its target temp
       document.getElementById("e0Temp"+index).innerHTML="Extruder: "+json.temperature.tool0.actual+"°/"+json.temperature.tool0.target+"°";
       // get temp of the bed and its target temp
-      console.log(json.temperature);
       if(typeof json.temperature.bed !== "undefined" && json.temperature.bed.actual !== null){
         document.getElementById("bedTemp"+index).innerHTML="Bed: "+json.temperature.bed.actual+"°/"+json.temperature.bed.target+"°";
       }else {
@@ -162,7 +161,7 @@ function addFromModal(){
   if(newIP === ""|| newApikey === ""){
       $("#missingInfoModal").modal("show");
   }else {
-      checkConnection(newIP, newApikey);
+      testConnection(newIP, newApikey);
       $("#newIP").val("");
       $("#newApikey").val("");
   }
@@ -222,30 +221,28 @@ function makeBlank(index){
   document.getElementById("printerIP"+index).innerHTML = printers.ip[index]+" (not connected)";
 }
 
-function checkConnection(ip, apikey){
-	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at <b>"+ip+"</b> using the following API key: "+apikey+". Remember to include the port of your OctoPrint instance in the IP Address field. Do you still want to add this printer?";
-  var connected = false;
+function connectionError(ip, apikey){
+	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at <b>"+ip+"</b> using the following API key: "+apikey+". Remember to <b>include the port</b> of your OctoPrint instance in the IP Address field. Do you still want to add this printer?";
 
-	$.ajaxSetup({headers:{"X-Api-Key" : apikey}});
-	connected = $.getJSON("http://"+ip+"/api/version", function(json){
-		if(json.api !== null){
-      connected = true;
-      addPrinter(ip, apikey);
+	bootbox.confirm(errorMessage, function(result){
+		if(result){
+			addPrinter(ip, apikey);
 		}else {
-      connected = false;
+			return 0;
 		}
-	})
-	.error(function(){
-    connected = false;
 	});
+}
 
-	if(!connected){
-		bootbox.confirm(errorMessage, function(result){
-			if(result){
-				addPrinter(ip, apikey);
-			}else {
-				return 0;
-			}
-		});
-	}
+function testConnection(ip, apikey){
+  	$.ajaxSetup({headers:{"X-Api-Key" : apikey}});
+  	$.getJSON("http://"+ip+"/api/version", function(json){
+  		if(json.api !== null){
+        addPrinter(ip, apikey);
+  		}else {
+        connectionError(ip, apikey);
+  		}
+  	})
+  	.error(function(){
+      connectionError(ip, apikey);
+  	});
 }
