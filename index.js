@@ -1,6 +1,7 @@
 var refreshRate = 5000; // in milliseconds
 var numPrinters = 0;
 var printers = new Object();
+var connected = true;
 
 // TODO
 // switch to sockJS
@@ -91,7 +92,8 @@ function updateStatus(ip, apikey, index){
       // get temp of extruder 0 and its target temp
       document.getElementById("e0Temp"+index).innerHTML="Extruder: "+json.temperature.tool0.actual+"°/"+json.temperature.tool0.target+"°";
       // get temp of the bed and its target temp
-      if(typeof json.temperature.bed!=="undefined"){
+      console.log(json.temperature);
+      if(typeof json.temperature.bed !== "undefined" && json.temperature.bed.actual !== null){
         document.getElementById("bedTemp"+index).innerHTML="Bed: "+json.temperature.bed.actual+"°/"+json.temperature.bed.target+"°";
       }else {
         document.getElementById("bedTemp"+index).innerHTML="0°";
@@ -112,8 +114,8 @@ function updatePrinters(){
 
 function addPrinter(ip, apikey){
   var printerNum = numPrinters;
-  var removeButton = '<li><button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></li>';
-  var octoPrintPageButton = '<li><a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printers.ip[printerNum]+'/" target="_blank"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>';
+  var removeButton = '<li><button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" onclick="removePrinter('+printerNum+')">Remove Printer <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></li>';
+  var octoPrintPageButton = '<li><a type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" href="http://'+printers.ip[printerNum]+'/" target="_blank">OctoPrint <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>';
 
   // add HTML
   $("#printerGrid").append('<div class="col-xs-6 col-md-4" id="printer'+printerNum+'"></div>');
@@ -221,25 +223,23 @@ function makeBlank(index){
 }
 
 function checkConnection(ip, apikey){
-	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at "+ip+" using the following API key: "+apikey+". Remember to include the port of your OctoPrint instance in the IP Address field. Do you still want to add this printer?";
-	var connected = false;
+	var errorMessage = "PrinterView was unable to connect to the OctoPrint instance at <b>"+ip+"</b> using the following API key: "+apikey+". Remember to include the port of your OctoPrint instance in the IP Address field. Do you still want to add this printer?";
+  var connected = false;
 
 	$.ajaxSetup({headers:{"X-Api-Key" : apikey}});
-	$.getJSON("http://"+ip+"/api/version", function(json){
-		console.log("dbfbd");
+	connected = $.getJSON("http://"+ip+"/api/version", function(json){
 		if(json.api !== null){
-			connected = true;
+      connected = true;
+      addPrinter(ip, apikey);
 		}else {
-			connected = false;
+      connected = false;
 		}
 	})
 	.error(function(){
-		connected = false;
+    connected = false;
 	});
 
-	if(connected){
-		addPrinter(ip, apikey);
-	}else {
+	if(!connected){
 		bootbox.confirm(errorMessage, function(result){
 			if(result){
 				addPrinter(ip, apikey);
