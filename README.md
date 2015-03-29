@@ -22,4 +22,5 @@ PrinterView uses the following:
 * [Bootbox](http://bootboxjs.com/)
 
 # Screenshots
-![screenshot](https://raw.githubusercontent.com/quillford/PrinterView/master/images/screenshots/screenshot1.png)
+![Welcome screen](https://raw.githubusercontent.com/quillford/PrinterView/master/images/screenshots/screenshot-welcome.png)
+![screenshot](https://raw.githubusercontent.com/quillford/PrinterView/master/images/screenshots/screenshot.png)
