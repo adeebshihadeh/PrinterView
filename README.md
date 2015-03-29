@@ -14,6 +14,7 @@ PrinterView uses the following:
 * [jQuery](https://jquery.com/)
 * [Bootstrap](http://getbootstrap.com/)
 * [Bootbox](http://bootboxjs.com/)
+* [Bootstrap Toggle](http://www.bootstraptoggle.com/)
 
 # Screenshots
 ![Welcome screen](https://raw.githubusercontent.com/quillford/PrinterView/master/images/screenshots/screenshot-welcome.png)
